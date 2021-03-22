@@ -1,0 +1,10 @@
+.card {
+  width: fit-content;
+}
+
+.flex-container {
+  display: flex;
+  background-color: lightgray;
+  width: fit-content;
+  place-items: center;
+}

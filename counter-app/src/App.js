@@ -2,6 +2,7 @@ import Navbar from "./components/nav-bar";
 import "./App.css";
 import Counters from "./components/counters";
 import React, { Component } from "react";
+import Card from "./components/card-component";
 
 class App extends Component {
   state = {
@@ -30,7 +31,7 @@ class App extends Component {
 
   handleDelete = (counterId) => {
     const countersUpdated = this.state.counters.filter(
-      (counter) => counter.id != counterId
+      (counter) => counter.id !== counterId
     );
     this.setState({ counters: countersUpdated });
   };
@@ -60,6 +61,7 @@ class App extends Component {
             counters={this.state.counters}
           />
         </main>
+        <Card />
       </React.Fragment>
     );
   }
