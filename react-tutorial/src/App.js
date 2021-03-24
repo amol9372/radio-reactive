@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import Hook from "./components/hook";
 import Person from "./components/person";
 
 class App extends Component {
@@ -33,7 +34,7 @@ class App extends Component {
     return (
       <React.Fragment>
         <h2>This is test app</h2>
-
+        <Hook />
         <div className="App">
           {this.state.persons.map((person, index) => (
             <Person
