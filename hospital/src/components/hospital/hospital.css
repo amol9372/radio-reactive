@@ -1,0 +1,55 @@
+body {
+  min-width: 400px;
+}
+.slideshow {
+  text-align: center;
+
+  border: 1px solid;
+  margin: 30px 90px;
+  height: 400px;
+}
+
+.about {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  margin: 30px 90px;
+  height: 200px;
+}
+
+.about > .history-text {
+  height: 200px;
+  width: 1250px;
+}
+
+.about > .image {
+  text-align: center;
+  border: 1px solid;
+  height: 200px;
+  width: 19em;
+}
+
+.address {
+  box-shadow: 1px;
+  border: solid 1px;
+  background-color: grey;
+}
+
+.mapouter {
+  height: 300px;
+  width: 400px;
+}
+
+.gmap_canvas {
+  overflow: hidden;
+  background: none !important;
+  height: 300px;
+  width: 400px;
+}
+
+/* .address-location {
+  box-shadow: 1px;
+  background-color: grey;
+  height: 300px;
+  width: 400px;
+} */
