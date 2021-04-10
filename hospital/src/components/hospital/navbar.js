@@ -1,11 +1,27 @@
 import React from "react";
+import googleLogo from "./static/google.svg";
+import faceboogLogo from "./static/facebook.svg";
+import followLogo from "./static/follow.svg";
 
 function Navbar() {
+  const logoStyle = {
+    height: 25,
+    width: 25,
+  };
+
+  const followlogoStyle = {
+    height: 35,
+    width: 35,
+  };
+
+  const socialStyle = {
+    textAlign: "center",
+    gap: 10,
+  };
+
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <a className="navbar-brand" href="/">
-        Navbar
-      </a>
+    <nav className="navbar navbar-expand-lg navbar-fixed-top navbar-light bg-light">
+      <a className="navbar-brand" href="/"></a>
       <button
         className="navbar-toggler"
         type="button"
@@ -26,26 +42,22 @@ function Navbar() {
           </li>
           <li className="nav-item">
             <a className="nav-link" href="/">
-              Contact Us
+              About
             </a>
           </li>
-          <li className="nav-item justify-content-end ml-auto">
+          <li className="nav-item">
             <a className="nav-link" href="/">
-              Contact Us again
+              Contact Us
             </a>
           </li>
         </ul>
       </div>
-      <div className="right-items d-flex">
-        <input
-          className="form-control mr-sm-2"
-          type="search"
-          placeholder="Search"
-          aria-label="Search"
-        />
-        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">
-          Search
-        </button>
+      <div className="right-items d-flex" style={socialStyle}>
+        <img src={followLogo} alt="" style={followlogoStyle} />
+
+        <img src={googleLogo} alt="" style={logoStyle} />
+
+        <img src={faceboogLogo} alt="" style={logoStyle} />
       </div>
     </nav>
   );

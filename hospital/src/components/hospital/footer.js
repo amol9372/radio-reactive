@@ -1,24 +1,23 @@
 import React from "react";
-import { Button } from "@material-ui/core";
 
 function Footer() {
   const footerDivStyle = {
     backgroundColor: "black",
     color: "white",
-    height: 80,
+    height: 60,
   };
 
   const footerStyle = {
     textAlign: "left",
     paddingLeft: 100,
-    paddingTop: 27,
+    paddingTop: 15,
   };
 
   return (
     <div className="footer" style={footerDivStyle}>
       {/* <Button variant="">Default</Button> */}
       <footer>
-        <p style={footerStyle}>This is a footer</p>
+        <p style={footerStyle}>2021 Manjit Hospital All Rights Reserved</p>
       </footer>
     </div>
   );

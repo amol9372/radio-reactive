@@ -1,25 +1,23 @@
-body {
-  min-width: 400px;
-}
-.slideshow {
+/* .slideshow {
   text-align: center;
 
   border: 1px solid;
-  margin: 30px 90px;
+  margin: 7% 4%;
   height: 400px;
-}
+} */
 
 .about {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   gap: 40px;
-  margin: 30px 90px;
-  height: 200px;
+  margin: 7% 7% 4%;
+  height: auto;
+  position: relative;
 }
 
 .about > .history-text {
-  height: 200px;
-  width: 1250px;
+  height: fit-content;
+  /* width: 1250px; */
 }
 
 .about > .image {
