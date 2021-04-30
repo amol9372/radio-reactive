@@ -1,17 +1,13 @@
 import Divider from "@material-ui/core/Divider";
-import CircularProgress from "@material-ui/core/CircularProgress";
 import GoogleLoginButton from "../social-login/GoogleLoginButton";
 import React, { useState } from "react";
 import Card from "../UI/card";
-import MyButton from "../UI/Button";
+import MyButton from "../UI/button";
 import InputField from "../UI/inputfield";
-import axios from "axios";
 import CardBox from "../UI/cardbox";
 import { Link } from "@material-ui/core";
-
-axios.defaults.headers.common["X-Requested-With"] = "XmlHttpRequest";
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL;
-axios.defaults.withCredentials = true;
+import Label from "../UI/label";
+import LoadingIndicator from "../UI/loader";
 
 function LoginBox(props) {
   const userAttribute = {
@@ -53,10 +49,14 @@ function LoginBox(props) {
   return (
     <React.Fragment>
       <form onSubmit={loginFormSubmit}>
-        <CardBox>
+        <CardBox align="center">
           <Card>
+            <Label color="hsla(0,0%,100%,.87)" font="25px">
+              Login{" "}
+            </Label>
+
             <GoogleLoginButton authResponse={handleAuthResponse} />
-            <Divider />
+            <Divider style={{ background: "hsla(0,0%,80%,.37)" }} />
             <InputField
               label="Email"
               type="text"
@@ -75,19 +75,18 @@ function LoginBox(props) {
               required={true}
             />
             <MyButton backgroundColor="grey" text="Login" type="submit" />
-            <Divider />
             <div style={newUserStyle}>
-              <label>New User?</label>{" "}
+              <Label color="hsla(2,40%,90%,.77)"> New User ? </Label>
               <Link href="/register" color="secondary">
                 Sign Up
               </Link>
             </div>
           </Card>
 
-          {props.spinner && <CircularProgress color="secondary" />}
+          <LoadingIndicator />
 
           {props.response && (
-            <label style={{ color: "white" }}>{props.response} </label>
+            <Label color="hsla(0,0%,100%,.77)"> {props.response} </Label>
           )}
         </CardBox>
       </form>

@@ -6,7 +6,21 @@ const small = "20%";
 const medium = "50%";
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    backgroundColor: "#1f1f1f",
+    borderRadius: "8px",
+    border: "1px white",
+    background: "#1f1f1f",
+    "& .MuiOutlinedInput-input": {
+      padding: "10.5px 14px",
+    },
+  },
+
+  inputProps: {
+    color: "hsla(0,0%,100%,.77)",
+    background: "#1f1f1f",
+    height: 40,
+  },
 
   size: {
     width: (props) => {
@@ -24,18 +38,21 @@ const InputField = (props) => {
 
   return (
     <TextField
-      id={props.label}
+      // id={props.label}
       required={props.required}
       error={props.error}
       helperText={props.validationText}
       id="outlined-basic"
       value={props.value}
-      label={props.label}
+      placeholder={props.label}
       onChange={props.onchange}
       variant="outlined"
       fullWidth
       type={props.type}
       className={`${inputFieldStyle.root} ${inputFieldStyle.size}`}
+      InputProps={{
+        className: inputFieldStyle.inputProps,
+      }}
     />
   );
 };

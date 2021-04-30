@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import LoginBox from "./loginbox";
 import { Redirect } from "react-router";
-import axios from "axios";
-import { LOGIN } from "../../constants";
-
-axios.defaults.headers.common["X-Requested-With"] = "XmlHttpRequest";
-axios.defaults.baseURL = process.env.REACT_APP_SERVER_BASE_URL;
-axios.defaults.withCredentials = true;
+import { trackPromise } from "react-promise-tracker";
+import LoginService from "./../../services/loginService";
 
 const LoginPage = () => {
   const [userLoggedIn, setUserLoggedIn] = useState(false);
   const [response, setResponse] = useState("");
-  const [showSpinner, setShowSpinner] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("user-signed-in") === "true") {
@@ -23,31 +18,29 @@ const LoginPage = () => {
   }, []);
 
   const googleLoginResponse = (res) => {
-    console.log("[Google Auth Response]", res);
+    if (res.error) {
+      setResponse(res.error);
+      setUserLoggedIn(false);
+      return;
+    }
+
+    const request = { id_token: res.tokenId };
+
+    getLoginResponse("/user/google-signin", request);
   };
 
   const onLogin = (data) => {
+    getLoginResponse("/user/login", data);
+  };
+
+  const getLoginResponse = (url, request) => {
     setResponse("");
-    setShowSpinner(true);
-    axios
-      .post(LOGIN, data, { withCredentials: true })
-      .then((res) => {
-        setShowSpinner(false);
-        if (res.data.token) {
-          setResponse("Redirecting to Home page ....");
-          localStorage.setItem("user-signed-in", true);
-          //   userContext.user = res.data.user;
-          setUserLoggedIn(true);
-        } else {
-          console.log(res.data.message);
-          setResponse(res.data.message);
-        }
-      })
-      .catch((error) => {
-        setShowSpinner(false);
-        console.log(error.message);
-        setResponse(error.message);
-      });
+    const response = trackPromise(LoginService.userLogin(request, url));
+
+    response.then((res) => {
+      console.log(res);
+      setResponse(res.message);
+    });
   };
 
   return (
@@ -55,7 +48,6 @@ const LoginPage = () => {
       {userLoggedIn && <Redirect to="/home" />}
       <LoginBox
         onFormSubmit={onLogin}
-        spinner={showSpinner}
         response={response}
         googleLogin={googleLoginResponse}
       />

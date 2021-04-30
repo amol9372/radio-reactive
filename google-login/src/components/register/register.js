@@ -4,10 +4,11 @@ import GoogleLoginButton from "./../social-login/GoogleLoginButton";
 import React, { useEffect, useState } from "react";
 import { Redirect } from "react-router";
 import Card from "../UI/card";
-import MyButton from "../UI/Button";
+import MyButton from "../UI/button";
 import InputField from "../UI/inputfield";
 import axios from "axios";
 import CardBox from "../UI/cardbox";
+import Label from "../UI/label";
 import { Link } from "@material-ui/core";
 
 axios.defaults.headers.common["X-Requested-With"] = "XmlHttpRequest";
@@ -123,10 +124,16 @@ function Register() {
       <form onSubmit={loginFormSubmit}>
         <CardBox>
           <Card>
+            <Label color="hsla(0,0%,100%,.87)" font="25px">
+              Register{" "}
+            </Label>
             {userLoggedIn && <Redirect to="/login" />}
             <GoogleLoginButton authResponse={handleAuthResponse} />
 
-            <Divider />
+            <Divider
+              variant="fullWidth"
+              style={{ background: "hsla(0,0%,80%,.37)" }}
+            />
 
             <InputField
               label="Name"
@@ -174,9 +181,8 @@ function Register() {
               type="submit"
             />
 
-            <Divider />
             <div style={newUserStyle}>
-              <label>Already Registered ?</label>{" "}
+              <Label color="hsla(2,40%,90%,.77)"> Already Registered ? </Label>
               <Link href="/login" color="secondary">
                 Login
               </Link>

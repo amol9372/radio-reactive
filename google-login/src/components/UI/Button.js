@@ -1,6 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Label from "./label";
 
 const small = "20%";
 const medium = "50%";
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
         return medium;
       }
     },
+    height: (props) => (props.height ? props.height : "30px"),
   },
 });
 
@@ -34,11 +36,14 @@ const MyButton = (props) => {
   return (
     <Button
       className={`${buttonStyle.root} ${buttonStyle.size}`}
-      variant="contained"
-      // onClick={props.onClick}
+      variant={props.varint ? props.varient : "contained"}
+      style={{ textTransform: "none" }}
+      onClick={props.onClick}
       type={props.type}
     >
-      {props.text}
+      <Label color="white" font={props.textSize}>
+        {props.text}
+      </Label>
     </Button>
   );
 };

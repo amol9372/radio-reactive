@@ -3,7 +3,7 @@ import { GoogleLogin } from "react-google-login";
 
 function GoogleLoginButton(props) {
   const successResponseGoogle = (res) => {
-    props.authResponse(res.data);
+    props.authResponse(res);
   };
 
   const failureResponseGoogle = (res) => {

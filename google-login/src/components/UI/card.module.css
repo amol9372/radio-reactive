@@ -1,20 +1,16 @@
 .card {
-  background: white;
+  background: #282828;
   border-radius: 8px;
   display: flex;
-  border: 1px solid #ccc;
-  width: 30%;
   padding: 1.5%;
-  gap: 16px;
-  flex-direction: column;
 }
 
 .cardbox {
   display: flex;
-  margin-top: 5%;
+
   padding: 1.5%;
   gap: 25px;
-  text-align: center;
-  align-items: center;
+  /* text-align: center; */
+  /* align-items: ; */
   flex-direction: column;
 }
