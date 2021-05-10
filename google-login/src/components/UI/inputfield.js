@@ -42,10 +42,9 @@ const InputField = (props) => {
       required={props.required}
       error={props.error}
       helperText={props.validationText}
-      id="outlined-basic"
       value={props.value}
       placeholder={props.label}
-      onChange={props.onchange}
+      onChange={(e) => props.onchange(e)}
       variant="outlined"
       fullWidth
       type={props.type}

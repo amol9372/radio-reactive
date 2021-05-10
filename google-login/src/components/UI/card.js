@@ -4,8 +4,8 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    display: "flex",
-    background: (props) => props.bgcolor,
+    display: (props) => (props.display ? props.display : "flex"),
+    background: (props) => (props.bgcolor ? props.bgcolor : "#282828"),
     width: (props) => (props.width ? props.width : "30%"),
     gap: (props) => (props.flexGap ? props.flexGap : "16px"),
     border: (props) => (props.border ? props.border : "0px solid"),

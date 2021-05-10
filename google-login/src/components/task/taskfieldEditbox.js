@@ -39,17 +39,20 @@ const TaskFieldEditBox = (props) => {
     }));
   };
 
+  const onTaskChangeSubmit = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <Card width="97%" flexGap="6px" border="1px solid grey">
-      <InputField
-        label="enter a task"
-        type="text"
-        value={props.value}
-        onchange={taskFieldEditorHandler}
-        // error={email.error}
-        // validationText={email.validation}
-      />
-      <Card width="97%" flexGap="5px" flexDirection="row">
+      <Editor
+        property={task}
+        taskId={props.id}
+        onCancelEdit={cancelEdit}
+        masterData={priorityMasterData}
+        submit={onTaskChangeSubmit}
+        propertyHandler={taskFieldEditorHandler}
+      >
         <CustomIconDropdown
           name={task.colorName}
           color={task.color}
@@ -57,12 +60,7 @@ const TaskFieldEditBox = (props) => {
           masterData={priorityMasterData}
           onChange={taskPriorityChangeHandler}
         />
-      </Card>
-      <Editor
-        taskId={props.id}
-        onCancelEdit={cancelEdit}
-        masterData={priorityMasterData}
-      />
+      </Editor>
     </Card>
   );
 };

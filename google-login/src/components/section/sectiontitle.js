@@ -20,16 +20,8 @@ const SectionTitle = (props) => {
     setSectionEdit(false);
   };
 
-  const sectionChangeHandler = () => {
-    setSectionEdit(true);
-  };
-
   const sectionNameChangeHandler = (name) => {
     props.sectionNameChangeHandler(name);
-  };
-
-  const nameFormSubmit = () => {
-    props.nameFormSubmit();
   };
 
   return (
@@ -41,10 +33,10 @@ const SectionTitle = (props) => {
       <SectionName
         editMode={sectionEdit}
         onCancel={cancelSectionNameChange}
-        changeSectionName={sectionChangeHandler}
+        changeSectionName={() => setSectionEdit(true)}
         sectionNameHandler={sectionNameChangeHandler}
-        nameFormSubmit={nameFormSubmit}
-        name={props.name}
+        nameFormSubmit={() => props.nameFormSubmit()}
+        section={props.section}
       />
     </Card>
   );

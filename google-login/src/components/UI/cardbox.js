@@ -4,17 +4,13 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    // backgroundColor: (props) => props.backgroundColor,
-    // "&:hover": {
-    //   backgroundColor: (props) => props.backgroundColor,
-    // },
-    // color: "#fff",
-    // "&:focus": {
-    //   boxShadow: "0 0 0 0.2rem rgba(0,123,255,.5)",
-    // },
-
     alignItems: (props) => (props.align ? props.align : "center"),
     marginTop: (props) => (props.marginTop ? props.marginTop : "5%"),
+    flexDirection: (props) =>
+      props.flexDirection ? props.flexDirection : "column",
+    flex: (props) => props.flex,
+    marginLeft: (props) => props.marginLeft,
+    padding: (props) => (props.padding ? props.padding : "1.5%"),
   },
 });
 

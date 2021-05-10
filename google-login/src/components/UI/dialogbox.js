@@ -20,7 +20,8 @@ const theme = createMuiTheme({
   overrides: {
     MuiDialog: {
       paper: {
-        width: "300px",
+        // width: props.width ? props.width : "300px",
+        width: "fit-content",
         borderColor: "#1f1f1f",
         borderStyle: "solid",
         borderWidth: "0.2px",

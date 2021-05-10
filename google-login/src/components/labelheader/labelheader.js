@@ -1,49 +1,67 @@
-import React, { useState, useRef } from "react";
-
+import React, { useState, useRef, useEffect } from "react";
 import Card from "../UI/card";
 import Label from "../UI/label";
 import { makeStyles } from "@material-ui/core/styles";
 import MyButton from "../UI/button";
 import { Editor } from "../UI/editorbox";
 import InputField from "../UI/inputfield";
+import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
+import { IconButton } from "@material-ui/core";
+import InviteUserDialog from "../dialog/inviteUserDialog";
 
 const useStyles = makeStyles({
   header: {
     marginRight: "10px",
+    gap: "20px",
+  },
+  share: {
+    marginRight: "25px",
+
+    paddingBottom: "5px",
   },
 });
 
 const LabelHeader = (props) => {
-  const prevLabelName = useRef(props.labelName);
+  const [label, setLabel] = useState(props.label);
+  const prevLabel = useRef(props.label);
   const labelHeaderStyle = useStyles();
   const [editLabelMode, setEditLabelMode] = useState(false);
+  const [inviteUserDialog, setInviteUserDialog] = useState(false);
 
   const labelNameHandler = (event) => {
-    props.labelNameHandler(event.target.value);
+    setLabel((label) => ({
+      ...label,
+      name: event.target.value,
+    }));
   };
 
   const submitNameChange = (event) => {
     event.preventDefault();
-    props.labelNameFormSubmit();
+    props.labelNameFormSubmit(label);
   };
 
   const cancelEdit = (id) => {
+    setLabel(prevLabel.current);
     setEditLabelMode(false);
-    props.prevLabelName(prevLabelName.current);
   };
+
+  useEffect(() => {
+    setEditLabelMode(false);
+    setLabel(props.label);
+    prevLabel.current = props.label;
+  }, [props.showLabel]);
 
   if (editLabelMode) {
     return (
-      <form onSubmit={submitNameChange}>
-        <Card width="30%">
-          <InputField
-            value={props.labelName}
-            onchange={labelNameHandler}
-            type="text"
-          />
-          <Editor taskId={props.id} onCancelEdit={cancelEdit} />
-        </Card>
-      </form>
+      <Card width="30%">
+        <Editor
+          property={label}
+          taskId={label.id}
+          onCancelEdit={cancelEdit}
+          propertyHandler={labelNameHandler}
+          submit={submitNameChange}
+        />
+      </Card>
     );
   }
 
@@ -54,12 +72,25 @@ const LabelHeader = (props) => {
           type="button"
           varient="text"
           backgroundColor="#1f1f1f"
-          text={props.labelName}
+          text={label.name}
           textSize="23px"
           onClick={() => {
             setEditLabelMode(true);
           }}
         />
+        <IconButton onClick={() => setInviteUserDialog(true)}>
+          <GroupOutlinedIcon
+            style={{ color: "hsla(0,0%,60%,.57)", fontSize: 25 }}
+          />
+          <span style={{ color: "hsla(0,0%,60%,.57)", font: "caption" }}>
+            {label.shared}
+          </span>
+          <InviteUserDialog
+            open={inviteUserDialog}
+            closeDialog={() => setInviteUserDialog(false)}
+            existingUsers={["amolsingh", "vikaskumar"]}
+          />
+        </IconButton>
       </div>
     </Card>
   );

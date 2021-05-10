@@ -41,9 +41,10 @@ const MyButton = (props) => {
       onClick={props.onClick}
       type={props.type}
     >
-      <Label color="white" font={props.textSize}>
+      <span style={{ fontSize: props.textSize }} color={props.color}>
         {props.text}
-      </Label>
+      </span>
+      {/* </Label> */}
     </Button>
   );
 };

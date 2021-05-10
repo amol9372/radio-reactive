@@ -3,9 +3,9 @@ import { Redirect } from "react-router";
 import SideBar from "../sidebar/sidebar";
 import CardBox from "../UI/cardbox";
 import HomeDiv from "./homepageflex";
-import SectionCard from "../section/sectioncard";
 import { makeStyles } from "@material-ui/core/styles";
 import LabelHeader from "../labelheader/labelheader";
+import Sections from "../section/sections";
 
 const useStyles = makeStyles({
   base: {
@@ -15,79 +15,88 @@ const useStyles = makeStyles({
   },
 });
 
+const labelAttribute = {
+  id: NaN,
+  name: "",
+  sections: [],
+  color: "",
+  current: false,
+};
+
 const Home = () => {
   const [authRequired, setAuthRequired] = useState(false);
-  const [section, setSection] = useState(""); // for testing
-  const [label, setLabel] = useState("Label 1"); // for testing
   const baseStyle = useStyles();
+  // ==============================
 
-  const sectionNameChangeHandler = (name) => {
-    setSection({ name: name });
-  };
+  const [currentLabel, setCurrentLabel] = useState(labelAttribute); // for testing
+  const [labelChanged, setLabelChanged] = useState(false);
+  // ========================
 
-  const labelNameHandler = (labelName) => {
-    setLabel(labelName);
-  };
-
-  const setPrevSection = (prevSection) => {
-    setSection(prevSection);
-  };
-
-  const nameFormSubmit = () => {
-    console.log("[Submit Section Name change]");
-    // Api for backend
-  };
+  // const labelNameHandler = (labelName) => {
+  //   setCurrentLabel((label) => ({
+  //     ...label,
+  //     name: labelName,
+  //   }));
+  // };
 
   useEffect(() => {
-    if (localStorage.getItem("user-signed-in") === "true") {
-      setTimeout(function () {
-        setSection({ name: "Section From timeout" });
-        console.log("[User Already Signed in]");
-      }, 1000);
-    } else {
+    if (!localStorage.getItem("user-signed-in")) {
       setAuthRequired(true);
       console.log("[Redirecting to login page]");
     }
   }, []);
 
-  const onAddTask = () => {
-    // add task
-  };
-
   const addLabel = () => {
-    // add task
+    // add label
   };
 
-  const labelNameFormSubmit = () => {
+  const labelNameChangeFormSubmit = (label) => {
     // change label name
+    console.log("[Label changed]", label);
   };
 
-  const showPrevLabelName = (prevLabelName) => {
-    setLabel(prevLabelName);
+  const changeCurrentLabel = (label) => {
+    setCurrentLabel(label);
+    localStorage.setItem("currentLabel", JSON.stringify(label));
+    setLabelChanged(!labelChanged);
   };
 
   return (
     <div className={baseStyle.base}>
       {authRequired && <Redirect to="/login" />}
 
-      <SideBar labels={[]} addLabel={addLabel} />
+      <SideBar
+        addLabel={addLabel}
+        showSections={changeCurrentLabel}
+        setCurrentLabel={(label) => setCurrentLabel(label)}
+      />
       <HomeDiv flexDirection="column">
-        <LabelHeader
-          labelName={label}
-          labelNameHandler={labelNameHandler}
-          prevLabelName={showPrevLabelName}
-          labelNameFormSubmit={labelNameFormSubmit}
-        />
-        <CardBox align="flex-start" marginTop="1%">
-          {section && (
-            <SectionCard
-              section={section}
-              setSectionName={sectionNameChangeHandler}
-              prevSection={setPrevSection}
-              nameFormSubmit={nameFormSubmit}
-              addTask={onAddTask}
-            />
-          )}
+        {currentLabel.name && (
+          <LabelHeader
+            label={currentLabel}
+            // labelNameHandler={labelNameHandler}
+            prevLabelName={(prevLabelName) =>
+              setCurrentLabel((prevLabel) => ({
+                ...prevLabel,
+                name: prevLabelName,
+              }))
+            }
+            showLabel={changeCurrentLabel}
+            labelNameFormSubmit={labelNameChangeFormSubmit}
+          />
+        )}
+
+        <CardBox
+          align="flex-start"
+          marginTop="0%"
+          flexDirection="column"
+          marginLeft="auto"
+          padding=".5%"
+        >
+          <Sections
+            currentLabel={currentLabel}
+            labelChangeFromSideBar={labelChanged}
+          />
         </CardBox>
       </HomeDiv>
     </div>

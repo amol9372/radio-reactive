@@ -1,37 +1,57 @@
-import { useState, useRef } from "react";
+import { useRef, useState } from "react";
 import Card from "../UI/card";
 import TaskFieldBox from "../task/taskfieldbox";
 import React from "react";
 import SectionTitle from "./sectiontitle";
 
+const taskAttribute = {
+  id: NaN,
+  name: "",
+  priority: "",
+  completed: false,
+};
+
 const SectionCard = (props) => {
-  const prevSectionName = useRef(props.section);
+  const [section, setSection] = useState(props.section);
+  const prevSectionName = useRef(props.section.name);
 
   const nameChangeHandler = (name) => {
-    props.setSectionName(name);
+    setSection((section) => ({
+      ...section,
+      name: name,
+    }));
   };
 
   const setPrevSection = () => {
-    props.prevSection(prevSectionName.current);
+    setSection((section) => ({
+      ...section,
+      name: prevSectionName.current,
+    }));
   };
 
-  const nameFormSubmit = () => {
-    props.nameFormSubmit();
-  };
-
-  const addTask = () => {
-    props.addTask();
+  const toggleTaskStatus = (tasks, sectionId) => {
+    props.toggleTaskStatus(tasks, sectionId);
   };
 
   return (
-    <Card width="300px" flexGap="5px">
+    <Card
+      width="300px"
+      flexGap="4px"
+      marginBottom="15px"
+      display="inline-block"
+    >
       <SectionTitle
-        name={props.section.name}
+        section={section}
         sectionNameChangeHandler={nameChangeHandler}
-        nameFormSubmit={nameFormSubmit}
+        nameFormSubmit={() => props.nameFormSubmit(section)}
         showPrevSection={setPrevSection}
       />
-      <TaskFieldBox tasks={[]} addTask={addTask} />
+      <TaskFieldBox
+        addTask={() => props.addTask()}
+        tasks={props.tasks}
+        toggleTaskStatus={toggleTaskStatus}
+        section={section}
+      />
     </Card>
   );
 };

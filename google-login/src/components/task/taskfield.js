@@ -9,15 +9,15 @@ import LabelOutlinedIcon from "@material-ui/icons/LabelOutlined";
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
-    border: "solid 1px black",
+    border: (props) => (props.border ? props.border : "solid 1px black"),
     borderRadius: "8px",
-    height: "50px",
+    height: (props) => (props.height ? props.height : "43px"),
     gap: "10px",
   },
 }));
 
 const TaskItem = (props) => {
-  const classes = useStyles();
+  const classes = useStyles(props);
   const [checked, setChecked] = React.useState([1]);
   const [taskEditValue, setTaskEdit] = useState(props.value);
 
@@ -25,17 +25,16 @@ const TaskItem = (props) => {
     setTaskEdit(value);
   };
 
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
+  const handleToggle = () => {
+    // const currentIndex = checked.indexOf(value);
+    // const newChecked = [...checked];
+    // if (currentIndex === -1) {
+    //   newChecked.push(value);
+    // } else {
+    //   newChecked.splice(currentIndex, 1);
+    // }
+    // setChecked(newChecked);
+    props.toggleTaskCompletion(props);
   };
 
   const toggleEdit = (id) => {
@@ -64,12 +63,17 @@ const TaskItem = (props) => {
         className={classes.listItem}
       >
         <LabelOutlinedIcon fontSize="small" style={{ color: "grey" }} />
-        <ListItemText primary={props.value} style={{ color: "white" }} />
+        <ListItemText
+          primary={props.value}
+          style={{ color: "white", textDecoration: "line-through" }}
+        />
         <ListItemSecondaryAction>
           <Checkbox
             edge="end"
-            onChange={handleToggle(props.value)}
-            checked={checked.indexOf(props.value) !== -1}
+            onChange={handleToggle}
+            style={{ color: "grey" }}
+            // checked={checked.indexOf(props.value) !== -1}
+            defaultChecked={props.completed}
             inputProps={{ "aria-labelledby": props.value }}
           />
         </ListItemSecondaryAction>

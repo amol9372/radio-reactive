@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles({
   root: {
     display: "flex",
-    gap: "4px",
+    gap: "1px",
     flexDirection: (props) =>
       props.flexDirection ? props.flexDirection : "row",
     width: "100%",
