@@ -32,7 +32,7 @@ export const Editor = (props) => {
         />
         <div className={styles.children}>{props.children}</div>
         <div className={styles.formButtons}>
-          <MyButton backgroundColor="grey" text="Save" type="submit" />
+          <MyButton backgroundColor="#ff726f" text="Save" type="submit" />
           <Button
             color="primary"
             style={{ color: "white" }}

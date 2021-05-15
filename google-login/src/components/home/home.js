@@ -6,12 +6,18 @@ import HomeDiv from "./homepageflex";
 import { makeStyles } from "@material-ui/core/styles";
 import LabelHeader from "../labelheader/labelheader";
 import Sections from "../section/sections";
+import Label from "../UI/label";
 
 const useStyles = makeStyles({
   base: {
     display: "flex",
     flexDirection: "row",
     gap: "2%",
+  },
+  baseDiv: {
+    display: "flex",
+    flexDirection: "row",
+    gap: "4%",
   },
 });
 
@@ -25,28 +31,24 @@ const labelAttribute = {
 
 const Home = () => {
   const [authRequired, setAuthRequired] = useState(false);
+  const [renderHome, setRenderHome] = useState(false);
   const baseStyle = useStyles();
   // ==============================
 
-  const [currentLabel, setCurrentLabel] = useState(labelAttribute); // for testing
+  const [currentLabel, setCurrentLabel] = useState(labelAttribute);
   const [labelChanged, setLabelChanged] = useState(false);
   // ========================
 
-  // const labelNameHandler = (labelName) => {
-  //   setCurrentLabel((label) => ({
-  //     ...label,
-  //     name: labelName,
-  //   }));
-  // };
-
   useEffect(() => {
-    if (!localStorage.getItem("user-signed-in")) {
+    if (localStorage.getItem("user")) {
+      setRenderHome(true);
+    } else {
       setAuthRequired(true);
       console.log("[Redirecting to login page]");
     }
   }, []);
 
-  const addLabel = () => {
+  const addLabel = (label) => {
     // add label
   };
 
@@ -65,44 +67,46 @@ const Home = () => {
     <div className={baseStyle.base}>
       {authRequired && <Redirect to="/login" />}
 
-      <SideBar
-        addLabel={addLabel}
-        showSections={changeCurrentLabel}
-        setCurrentLabel={(label) => setCurrentLabel(label)}
-      />
-      <HomeDiv flexDirection="column">
-        {currentLabel.name && (
-          <LabelHeader
-            label={currentLabel}
-            // labelNameHandler={labelNameHandler}
-            prevLabelName={(prevLabelName) =>
-              setCurrentLabel((prevLabel) => ({
-                ...prevLabel,
-                name: prevLabelName,
-              }))
-            }
-            showLabel={changeCurrentLabel}
-            labelNameFormSubmit={labelNameChangeFormSubmit}
+      {renderHome && (
+        <div className={baseStyle.baseDiv}>
+          <SideBar
+            addLabel={addLabel}
+            showSections={changeCurrentLabel}
+            setCurrentLabel={(label) => setCurrentLabel(label)}
+            authRequired={authRequired}
           />
-        )}
+          {currentLabel.name && (
+            <HomeDiv flexDirection="column">
+              <LabelHeader
+                label={currentLabel}
+                prevLabelName={(prevLabelName) =>
+                  setCurrentLabel((prevLabel) => ({
+                    ...prevLabel,
+                    name: prevLabelName,
+                  }))
+                }
+                showLabel={changeCurrentLabel}
+                labelNameFormSubmit={labelNameChangeFormSubmit}
+              />
 
-        <CardBox
-          align="flex-start"
-          marginTop="0%"
-          flexDirection="column"
-          marginLeft="auto"
-          padding=".5%"
-        >
-          <Sections
-            currentLabel={currentLabel}
-            labelChangeFromSideBar={labelChanged}
-          />
-        </CardBox>
-      </HomeDiv>
+              <CardBox
+                align="flex-start"
+                marginTop="0%"
+                flexDirection="column"
+                marginLeft="auto"
+                padding=".5%"
+              >
+                <Sections
+                  currentLabel={currentLabel}
+                  labelChangeFromSideBar={labelChanged}
+                />
+              </CardBox>
+            </HomeDiv>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
 export default Home;
-
-// import PeopleAltIcon from '@material-ui/icons/PeopleAlt';

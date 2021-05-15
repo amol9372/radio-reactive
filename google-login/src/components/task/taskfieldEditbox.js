@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Card from "./../UI/card";
-import InputField from "./../UI/inputfield";
 import CustomIconDropdown from "./../dropdown/icondropdown";
 import { Editor } from "./../UI/editorbox";
 
@@ -11,23 +10,28 @@ const priorityMasterData = [
   { name: "Priority 4", color: "#dfdedd" },
 ];
 
-const TaskFieldEditBox = (props) => {
-  const taskAttribute = {
-    name: "",
-    colorName: "Priority 4",
-    // validation: "",
-    // error: false,
-    color: "#dfdedd",
-    default: false,
-  };
+// const taskAttribute = {
+//   name: "",
+//   priority: "Priority 4",
+//   // validation: "",
+//   // error: false,
+//   color: "#dfdedd",
+//   default: false,
+// };
 
-  const [task, setTask] = useState(taskAttribute);
+const TaskFieldEditBox = (props) => {
+  const [task, setTask] = useState(props.task);
 
   const taskFieldEditorHandler = (event) => {
-    props.onchange(event.target.value);
+    // props.onchange(event.target.value);
+    setTask((prevTask) => ({
+      ...prevTask,
+      name: event.target.value,
+    }));
   };
 
   const cancelEdit = (id) => {
+    setTask(props.task);
     props.onCancelEdit(id);
   };
 
@@ -35,12 +39,13 @@ const TaskFieldEditBox = (props) => {
     setTask((prevTask) => ({
       ...prevTask,
       color: taskColor.color,
-      colorName: taskColor.name,
+      priority: taskColor.name,
     }));
   };
 
-  const onTaskChangeSubmit = (event) => {
+  const onTaskSubmit = (event) => {
     event.preventDefault();
+    props.submit(task);
   };
 
   return (
@@ -50,11 +55,11 @@ const TaskFieldEditBox = (props) => {
         taskId={props.id}
         onCancelEdit={cancelEdit}
         masterData={priorityMasterData}
-        submit={onTaskChangeSubmit}
+        submit={onTaskSubmit}
         propertyHandler={taskFieldEditorHandler}
       >
         <CustomIconDropdown
-          name={task.colorName}
+          name={task.priority}
           color={task.color}
           dropdownIcon="priority"
           masterData={priorityMasterData}

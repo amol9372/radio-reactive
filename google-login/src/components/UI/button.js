@@ -1,7 +1,6 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
-import Label from "./label";
 
 const small = "20%";
 const medium = "50%";
@@ -44,7 +43,6 @@ const MyButton = (props) => {
       <span style={{ fontSize: props.textSize }} color={props.color}>
         {props.text}
       </span>
-      {/* </Label> */}
     </Button>
   );
 };

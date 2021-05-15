@@ -13,6 +13,8 @@ const useStyles = makeStyles({
       props.flexDirection ? props.flexDirection : "column",
     padding: (props) => (props.padding ? props.padding : "1.5%"),
     marginBottom: (props) => props.marginBottom,
+    paddingBottom: (props) => props.paddingBottom,
+    marginRight: (props) => props.marginRight,
   },
 
   size: {},

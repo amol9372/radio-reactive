@@ -1,10 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import Card from "../UI/card";
-import Label from "../UI/label";
 import { makeStyles } from "@material-ui/core/styles";
 import MyButton from "../UI/button";
 import { Editor } from "../UI/editorbox";
-import InputField from "../UI/inputfield";
 import GroupOutlinedIcon from "@material-ui/icons/GroupOutlined";
 import { IconButton } from "@material-ui/core";
 import InviteUserDialog from "../dialog/inviteUserDialog";
@@ -53,7 +51,7 @@ const LabelHeader = (props) => {
 
   if (editLabelMode) {
     return (
-      <Card width="30%">
+      <Card width="70%" marginBottom="35px">
         <Editor
           property={label}
           taskId={label.id}
@@ -73,7 +71,7 @@ const LabelHeader = (props) => {
           varient="text"
           backgroundColor="#1f1f1f"
           text={label.name}
-          textSize="23px"
+          textSize="26px"
           onClick={() => {
             setEditLabelMode(true);
           }}
@@ -83,7 +81,7 @@ const LabelHeader = (props) => {
             style={{ color: "hsla(0,0%,60%,.57)", fontSize: 25 }}
           />
           <span style={{ color: "hsla(0,0%,60%,.57)", font: "caption" }}>
-            {label.shared}
+            {label.shared.users.length}
           </span>
           <InviteUserDialog
             open={inviteUserDialog}

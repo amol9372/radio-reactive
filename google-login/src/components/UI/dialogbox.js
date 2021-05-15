@@ -40,6 +40,10 @@ const DialogBox = (props) => {
     props.closeDialog();
   };
 
+  const submit = () => {
+    console.log("[form submitted]");
+  };
+
   return (
     <MuiThemeProvider theme={theme}>
       <Dialog
@@ -57,7 +61,7 @@ const DialogBox = (props) => {
             <Button onClick={handleClose} color="primary" variant="contained">
               Cancel
             </Button>
-            <Button onClick={handleClose} color="primary" variant="contained">
+            <Button onClick={props.submit} color="primary" variant="contained">
               Add
             </Button>
           </DialogActions>

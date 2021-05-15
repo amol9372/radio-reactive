@@ -29,6 +29,7 @@ const SectionTitle = (props) => {
       flexDirection="row"
       width="95%"
       className={sectionTitleStyle.sectionCard}
+      marginBottom="30px"
     >
       <SectionName
         editMode={sectionEdit}

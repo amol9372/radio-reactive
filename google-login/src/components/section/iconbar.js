@@ -2,7 +2,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
 import { makeStyles } from "@material-ui/core/styles";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
-import React from "react";
+import React, { useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Label from "../UI/label";
 import Button from "@material-ui/core/Button";
@@ -62,27 +62,42 @@ export default IconBar;
 
 export const AddButton = (props) => {
   const iconStyle = useStyles();
+  const [newtask, setNewTask] = useState({
+    id: NaN,
+    name: "",
+    priority: "Priority 4",
+    color: "#dfdedd",
+    status: false,
+  });
 
   const cancelEdit = () => {
     props.onCancelEdit();
+    setNewTask({
+      id: NaN,
+      name: "",
+      priority: "Priority 4",
+      color: "#dfdedd",
+    });
   };
 
-  const submitNameChange = (event) => {
-    event.preventDefault();
+  const submitNameChange = (task) => {
+    // event.preventDefault();
+    // api call
+    // console.log(task);
+    props.submit(task);
   };
 
   const taskFieldEditorHandler = () => {};
 
   if (props.addTaskMode) {
     return (
-      <form onSubmit={submitNameChange}>
-        <TaskFieldEditBox
-          id={props.id}
-          value={""}
-          onchange={taskFieldEditorHandler}
-          onCancelEdit={cancelEdit}
-        />
-      </form>
+      <TaskFieldEditBox
+        id={props.id}
+        // onchange={taskFieldEditorHandler}
+        onCancelEdit={cancelEdit}
+        submit={submitNameChange}
+        task={newtask}
+      />
     );
   }
 

@@ -5,6 +5,8 @@ import CustomIconDropdown from "../dropdown/icondropdown";
 import Card from "../UI/card";
 import { Switch } from "@material-ui/core";
 import Label from "../UI/label";
+import { trackPromise } from "react-promise-tracker";
+import LabelService from "../../services/labelService";
 
 const labelsMasterData = [
   { name: "Green", color: "#83e292" },
@@ -16,12 +18,14 @@ const labelsMasterData = [
 
 const AddLabelDialog = (props) => {
   const labelAttribute = {
+    id: NaN,
     name: "",
     colorName: "Grey",
     validation: "",
     error: false,
     color: "#dfdedd",
     default: false,
+    primary_user: true,
   };
 
   const [label, setLabel] = useState(labelAttribute);
@@ -50,6 +54,8 @@ const AddLabelDialog = (props) => {
     setLabel((prevLabel) => ({
       ...prevLabel,
       name: inputLabel,
+      error: false,
+      validation: "",
     }));
   };
 
@@ -75,6 +81,32 @@ const AddLabelDialog = (props) => {
     });
   };
 
+  const labelNameSubmit = () => {
+    console.log("[label form submit]", label);
+    label.primary_user = true;
+
+    const requestBody = {
+      access_token: localStorage.getItem("access_token"),
+      label: label,
+    };
+
+    const response = trackPromise(
+      LabelService.createLabel(requestBody, "/resource/label")
+    );
+
+    response.then((res) => {
+      if (res.status === 401) {
+      } else if (res.status === 200) {
+        setLabel((prevLabel) => ({
+          ...prevLabel,
+          id: res.data.id,
+        }));
+      }
+    });
+
+    props.updateLabelsOnSuccess(label);
+  };
+
   return (
     <div>
       <DialogBox
@@ -82,6 +114,7 @@ const AddLabelDialog = (props) => {
         closeDialog={handleClose}
         title="Add New Label"
         saveCancelDialog={true}
+        submit={labelNameSubmit}
       >
         <Card width="90%" padding="6.5%">
           <InputField
@@ -110,7 +143,7 @@ const AddLabelDialog = (props) => {
               color="primary"
               inputProps={{ "aria-label": "secondary checkbox" }}
             />
-            <Label color="#dfdedd"> Default</Label>
+            <Label color="#dfdedd"> Add to Favourites</Label>
           </div>
         </Card>
       </DialogBox>

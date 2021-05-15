@@ -4,12 +4,12 @@ import TaskFieldBox from "../task/taskfieldbox";
 import React from "react";
 import SectionTitle from "./sectiontitle";
 
-const taskAttribute = {
-  id: NaN,
-  name: "",
-  priority: "",
-  completed: false,
-};
+// const taskAttribute = {
+//   id: NaN,
+//   name: "",
+//   priority: "",
+//   completed: false,
+// };
 
 const SectionCard = (props) => {
   const [section, setSection] = useState(props.section);
@@ -37,8 +37,10 @@ const SectionCard = (props) => {
     <Card
       width="300px"
       flexGap="4px"
-      marginBottom="15px"
+      marginBottom="25px"
       display="inline-block"
+      bgColor="white"
+      marginRight="20px"
     >
       <SectionTitle
         section={section}
@@ -51,6 +53,7 @@ const SectionCard = (props) => {
         tasks={props.tasks}
         toggleTaskStatus={toggleTaskStatus}
         section={section}
+        updateTasks={(task) => props.updateTasks(task, section.id)}
       />
     </Card>
   );
