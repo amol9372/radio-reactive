@@ -96,11 +96,11 @@ const AddLabelDialog = (props) => {
 
     response.then((res) => {
       if (res.status === 401) {
+        localStorage.clear();
+        return;
       } else if (res.status === 200) {
-        setLabel((prevLabel) => ({
-          ...prevLabel,
-          id: res.data.id,
-        }));
+        label.id = res.data.id;
+        setLabel(label);
       }
     });
 

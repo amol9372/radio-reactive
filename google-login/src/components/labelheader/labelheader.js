@@ -81,7 +81,7 @@ const LabelHeader = (props) => {
             style={{ color: "hsla(0,0%,60%,.57)", fontSize: 25 }}
           />
           <span style={{ color: "hsla(0,0%,60%,.57)", font: "caption" }}>
-            {label.shared.users.length}
+            {/* {label.shared.users.length} */} 0
           </span>
           <InviteUserDialog
             open={inviteUserDialog}

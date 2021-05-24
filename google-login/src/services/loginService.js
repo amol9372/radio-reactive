@@ -18,10 +18,10 @@ class LoginService {
 
     console.log("[Standard Auth Request]", data);
 
-    const body = JSON.stringify({
-      email: "amolsingh9372@gmail.com",
-      password: "password",
-    });
+    // const body = JSON.stringify({
+    //   email: "amolsingh9372@gmail.com",
+    //   password: "password",
+    // });
 
     // const config = {
     //   method: "post",
@@ -34,10 +34,7 @@ class LoginService {
     // };
 
     try {
-      const res = await axios.post(url, {
-        email: data.email,
-        password: data.password,
-      });
+      const res = await axios.post(url, data);
 
       if (res.status === 200) {
         response = Response(res, true);

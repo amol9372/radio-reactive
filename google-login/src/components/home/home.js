@@ -58,8 +58,8 @@ const Home = () => {
   };
 
   const changeCurrentLabel = (label) => {
-    setCurrentLabel(label);
     localStorage.setItem("currentLabel", JSON.stringify(label));
+    setCurrentLabel(label);
     setLabelChanged(!labelChanged);
   };
 
